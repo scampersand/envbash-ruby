@@ -1,7 +1,4 @@
 require_relative 'helper'
-require 'fileutils'
-require 'tmpdir'
-require 'envbash'
 
 
 class TestRead < Minitest::Test
@@ -12,25 +9,23 @@ class TestRead < Minitest::Test
   end
 
   def teardown
-    ENV.replace(@orig)
-    FileUtils.rm_rf(@tmpdir)
+    ENV.replace @orig
+    FileUtils.rm_rf @tmpdir
   end
 
   def test_read_missing_not_ok
-    assert_error_raised(nil, Errno::ENOENT) do
+    assert_raises Errno::ENOENT do
       EnvBash.read @envbash
     end
   end
 
   def test_read_missing_ok
-    assert_no_error do
-      EnvBash.read @envbash, missing_ok: true
-    end
+    EnvBash.read @envbash, missing_ok: true
   end
 
   def test_read_permission_error
     FileUtils.chmod 0, @tmpdir
-    assert_error_raised(nil, Errno::EACCES) do
+    assert_raises Errno::EACCES do
       EnvBash.read @envbash
     end
   end
@@ -66,7 +61,7 @@ class TestRead < Minitest::Test
     File.open(@envbash, 'w') do |f|
       f.write 'exit'
     end
-    assert_error_raised(nil, EnvBash::ScriptExitedEarly) do
+    assert_raises EnvBash::ScriptExitedEarly do
       EnvBash.read @envbash
     end
   end

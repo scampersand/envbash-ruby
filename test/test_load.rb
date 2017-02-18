@@ -1,5 +1,4 @@
 require_relative 'helper'
-require 'envbash'
 
 
 class TestLoad < Minitest::Test

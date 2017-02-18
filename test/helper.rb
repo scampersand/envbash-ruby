@@ -6,5 +6,7 @@ if ENV['CI'] == 'true'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
+require 'fileutils'
+require 'tmpdir'
 require 'minitest/autorun'
-require 'minitest/assert_errors'
+require 'envbash'
