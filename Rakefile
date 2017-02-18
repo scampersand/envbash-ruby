@@ -2,8 +2,8 @@ require 'rake/testtask'
 
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
-  test.pattern = 'test/test*.rb'
-  test.verbose = true
+  # make sure helper.rb is loaded first, to start simplecov
+  test.test_files = FileList['test/helper.rb', 'test/test*.rb']
 end
 
 task :default => :test
