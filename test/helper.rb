@@ -1,3 +1,5 @@
+require 'minitest/autorun'
+require 'minitest/assert_errors'
 require 'simplecov'
 SimpleCov.start
 

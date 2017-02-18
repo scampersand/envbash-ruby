@@ -1,14 +1,15 @@
+require 'open3'
 require 'shellwords'
 
 
 module EnvBash
 
-  FIXUPS = %qw{_ OLDPWD PWD SHLVL}
+  FIXUPS = %w{_ OLDPWD PWD SHLVL}
 
   class ScriptExitedEarly < StandardError
   end
 
-  def read(envbash, bash: 'bash', env: ENV, missing_ok: false, fixups: FIXUPS)
+  def EnvBash.read(envbash, bash: 'bash', env: ENV, missing_ok: false, fixups: FIXUPS)
     # make sure the file exists and is readable.
     # alternatively we could test File.readable?(envbash) but this approach
     # raises Errno::ENOENT or Errno::EACCES which is what we want.
@@ -27,10 +28,14 @@ module EnvBash
         #{Gem.ruby.shellescape} -e 'p ENV'
     EOT
 
+    # Process.spawn treats env as overriding ENV, and anything that should be
+    # omitted needs to have a nil value. If env == ENV then this is a noop.
+    env = Hash[ENV.keys.map {|k| [k, nil]}].merge(env)
+
     # run the inline script with bash -c, capturing stdout. if there is any
     # error output from env.bash, it will pass through to stderr.
     # exit status is ignored.
-    output = IO.popen(env, ['bash', '-c', inline, :in=>"/dev/null"]).read
+    output, _ = Open3.capture2(env, 'bash', '-c', inline, :in=>"/dev/null")
 
     # the only stdout from the inline script should be
     # `p ENV` so there should be no syntax errors eval'ing this. however there
@@ -45,7 +50,7 @@ module EnvBash
     # running the inline script with bash -c, but are certainly not part of the
     # intentional settings in env.bash.
     for f in fixups
-      if env.include? f
+      if env[f]  # not .include? because env might have nil values
         nenv[f] = env[f]
       else
         nenv.delete(f)

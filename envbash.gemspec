@@ -14,4 +14,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "codecov"
   spec.add_development_dependency "minitest"
+  spec.add_development_dependency "minitest-assert_errors"
+  spec.add_development_dependency "rake"
 end
