@@ -7,3 +7,7 @@ Rake::TestTask.new(:test) do |test|
 end
 
 task :default => :test
+
+# this adds "rake build" to make pkg/envbash-*.gem
+require 'bundler/setup'
+Bundler::GemHelper.install_tasks
