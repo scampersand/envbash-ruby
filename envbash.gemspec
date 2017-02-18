@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
   spec.name = "envbash"
   spec.summary = "Source env.bash script to update environment"
-  spec.version = "1.0.0"
+  spec.version = "1.0.1"
   spec.authors = ["Aron Griffis"]
   spec.email = "aron@scampersand.com"
   spec.homepage = "https://github.com/scampersand/envbash-ruby"
