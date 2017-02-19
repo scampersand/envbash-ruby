@@ -1,17 +1,17 @@
 # envbash
 
-[![gem](https://img.shields.io/gem/v/envbash.svg?style=plastic)](https://rubygems.org/gems/envbash)
-[![travis](https://img.shields.io/travis/scampersand/envbash-ruby/master.svg?style=plastic)](https://travis-ci.org/scampersand/envbash-ruby?branch=master)
-[![codecov](https://img.shields.io/codecov/c/github/scampersand/envbash-ruby/master.svg?style=plastic)](https://codecov.io/gh/scampersand/envbash-ruby/branch/master)
+[![gem](https://img.shields.io/gem/v/envbash.svg?style=plastic)][gem]
+[![travis](https://img.shields.io/travis/scampersand/envbash-ruby/master.svg?style=plastic)][travis]
+[![codecov](https://img.shields.io/codecov/c/github/scampersand/envbash-ruby/master.svg?style=plastic)][codecov]
 
 Ruby gem for sourcing a bash script to augment the environment.
 
 ## Rationale
 
-[12-factor apps](https://12factor.net/) require
-[configuration loaded from the environment](https://12factor.net/config).
+[12-factor apps][12] require
+[configuration loaded from the environment][12-config].
 
-That's [easy on a platform like Heroku](https://devcenter.heroku.com/articles/config-vars),
+That's [easy on a platform like Heroku][heroku-config],
 where the environment is preset by the user with commands like
 `heroku config:set`. But it's messier in development and non-Heroku
 deployments, where the environment might need to be loaded from a file.
@@ -34,7 +34,7 @@ Commonly the external file is called `env.bash`, hence the name of this project.
 
 ## Installation
 
-Install from [RubyGems](https://rubygems.org/gems/envbash)
+Install from [RubyGems][gem]
 
     gem install envbash
 
@@ -66,6 +66,14 @@ puts ENV['FOO']  #=> bar baz qux
 
 ## Legal
 
-Copyright 2017 [Scampersand LLC](https://scampersand.com)
+Copyright 2017 [Scampersand LLC][ss]
 
 Released under the [MIT license](https://github.com/scampersand/envbash-ruby/blob/master/LICENSE)
+
+[gem]: https://rubygems.org/gems/envbash
+[travis]: https://travis-ci.org/scampersand/envbash-ruby?branch=master
+[codecov]: https://codecov.io/gh/scampersand/envbash-ruby/branch/master
+[12]: https://12factor.net/
+[12-config]: https://12factor.net/config
+[heroku-config]: https://devcenter.heroku.com/articles/config-vars
+[ss]: https://scampersand.com
