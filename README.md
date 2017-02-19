@@ -17,20 +17,8 @@ where the environment is preset by the user with commands like
 deployments, where the environment might need to be loaded from a file.
 
 This package provides a mechanism for sourcing a Bash script to update
-Ruby's environment (`ENV`). There are reasons for using a Bash script
-instead of another configuration language:
-
-1. Environment variable keys and values should always be strings. Using a Bash
-   script to update the environment enforces that restriction, so there won't
-   be surprises when you deploy into something like Heroku later on.
-
-2. Using a script means that the values can be sourced into a Bash shell,
-   something that's non-trivial if you use a different config language.
-
-3. For better or worse, using a script means that environment variables can be
-   set using the full power of the shell, including reading from other files.
-
-Commonly the external file is called `env.bash`, hence the name of this project.
+Ruby's environment (`ENV`). Commonly the external file is called `env.bash`,
+hence the name of this project.
 
 ## Installation
 
@@ -64,7 +52,7 @@ EnvBash.load('env.bash')
 puts ENV['FOO']  #=> bar baz qux
 ```
 
-## Vagrant
+## Vagrant plugin
 
 This also works as a [Vagrant][vagrant] plugin to load environment variables for
 use in `Vagrantfile`. Putting settings in `env.bash` provides a single source of
@@ -121,6 +109,19 @@ export AWS_KEYPAIR_NAME=email@example.com
 ```
 
 ## FAQ
+
+### How is this different from [dotenv][dotenv-ruby]?
+
+Both projects aim to solve the same problem, but differ in approach.
+In particular, dotenv uses an ad hoc config syntax whereas envbash uses Bash.
+
+dotenv's syntax becomes a problem with multi-line strings.
+The [usage instructions][dotenv-usage] suggest sourcing `.env` into the shell,
+but the dotenv format for multi-line strings isn't compatible with the shell.
+
+If the point is to have a configuration language that's well-suited to
+environment variables, it's hard to beat pure Bash, and it's guaranteed to
+source properly into the shell.
 
 ### Should I commit `env.bash` to source control?
 
@@ -196,6 +197,10 @@ set -a; source /vagrant/env.bash; set +a
 Note that this means that settings are loaded on `vagrant ssh` so you need to
 exit the shell and rerun `vagrant ssh` to refresh if you change settings.
 
+### What about Python?
+
+See [envbash-python][envbash-python]
+
 ## Legal
 
 Copyright 2017 [Scampersand LLC][ss]
@@ -211,3 +216,6 @@ Released under the [MIT license](https://github.com/scampersand/envbash-ruby/blo
 [ss]: https://scampersand.com
 [vagrant]: http://www.vagrantup.com
 [vagrant-aws]: https://github.com/mitchellh/vagrant-aws
+[dotenv-ruby]: https://github.com/bkeepers/dotenv
+[dotenv-usage]: https://github.com/bkeepers/dotenv#usage
+[envbash-python]: https://github.com/scampersand/envbash-python
